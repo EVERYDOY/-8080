@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f4f6fb">
+<title>3000元存钱计划</title>
+<style>
+:root{--bg:#f4f6fb;--card:rgba(255,255,255,.76);--text:#182033;--muted:#778096;--blue:#4778f5;--line:rgba(120,135,165,.18);--green:#19a974}
+*{box-sizing:border-box}
+.intro-screen{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;overflow:hidden;padding:24px;background:radial-gradient(ellipse at 18% 18%,#dce7ff 0,transparent 42%),radial-gradient(ellipse at 85% 78%,#e7dcff 0,transparent 38%),linear-gradient(145deg,#f8faff,#edf1fb);transition:opacity .55s ease,visibility .55s ease}
+.intro-screen.hide{opacity:0;visibility:hidden;pointer-events:none}
+.intro-glow{position:absolute;width:310px;height:310px;border-radius:50%;background:linear-gradient(135deg,#9fc0ff75,#c5a8ff55);filter:blur(18px);animation:floatGlow 7s ease-in-out infinite}
+.intro-content{position:relative;width:min(100%,420px);padding:48px 25px 32px;text-align:center;border:1px solid #ffffffd9;border-radius:32px;background:#ffffff78;box-shadow:0 25px 80px #536b9b20,inset 0 1px 0 #fff;backdrop-filter:blur(28px);-webkit-backdrop-filter:blur(28px);animation:riseIn .8s cubic-bezier(.2,.8,.2,1) both}
+.intro-mark{width:64px;height:64px;display:grid;place-items:center;margin:0 auto 23px;border-radius:22px;color:white;font-size:30px;font-weight:850;background:linear-gradient(145deg,#6693ff,#9477f7);box-shadow:0 12px 28px #6b8df74a}
+.intro-kicker{font-size:10px;font-weight:800;letter-spacing:3px;color:#6d83bb}
+.intro-title{font-size:38px;letter-spacing:3px;margin:13px 0 10px;font-weight:800}
+.intro-subtitle{font-size:14px;color:#778096;line-height:1.8;margin:0 auto 29px}
+.enter-btn{width:100%;display:flex;align-items:center;justify-content:center;gap:12px;border:1px solid #ffffffb8;border-radius:16px;padding:15px 20px;background:linear-gradient(110deg,#4778f5,#8a71f4);color:white;font-size:15px;font-weight:750;box-shadow:0 12px 25px #6485e83b;transition:transform .2s,box-shadow .2s}
+.enter-btn:active{transform:scale(.98);box-shadow:0 5px 12px #6485e830}
+.intro-foot{font-size:9px;letter-spacing:2px;color:#9aa4b9;margin-top:27px}
+@keyframes riseIn{from{opacity:0;transform:translateY(18px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes floatGlow{0%,100%{transform:translate(-20px,-14px) scale(1)}50%{transform:translate(18px,16px) scale(1.1)}}
+@media(prefers-reduced-motion:reduce){.intro-content,.intro-glow{animation:none}}
+body{margin:0;background:radial-gradient(ellipse at 10% 0%,#e2ebff 0,transparent 42%),radial-gradient(ellipse at 100% 15%,#e6e2ff 0,transparent 35%),var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;padding:22px 14px 40px}
+main{max-width:620px;margin:auto}
+header{padding:18px 6px 20px}
+.eyebrow{font-size:12px;letter-spacing:2px;color:var(--blue);font-weight:750}
+h1{font-size:30px;letter-spacing:-.8px;margin:9px 0 7px}
+.sub{color:var(--muted);font-size:14px;line-height:1.65}
+.card{background:var(--card);border:1px solid rgba(255,255,255,.9);box-shadow:0 12px 36px rgba(35,55,100,.08);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);border-radius:24px;padding:21px;margin-bottom:15px}
+.target{background:linear-gradient(135deg,rgba(71,120,245,.96),rgba(123,101,246,.93));color:white;border:0;overflow:hidden;position:relative}
+.target:after{content:"";position:absolute;width:180px;height:180px;border:1px solid #ffffff38;border-radius:50%;right:-50px;top:-72px;box-shadow:0 0 0 25px #ffffff0d,0 0 0 50px #ffffff0a}
+.small{font-size:13px;opacity:.82}
+.amount{font-size:43px;font-weight:800;letter-spacing:-1px;margin:7px 0 15px}
+.progress-head{display:flex;justify-content:space-between;font-size:13px;margin-bottom:8px}
+.track{height:9px;background:#ffffff45;border-radius:99px;overflow:hidden}
+.fill{height:100%;width:0;background:white;border-radius:99px;transition:width .35s ease}
+.field{margin:16px 0}
+label{display:flex;justify-content:space-between;gap:12px;font-size:14px;font-weight:650;margin-bottom:9px}
+input[type=number],input[type=date]{width:100%;border:1px solid var(--line);background:#fff;border-radius:13px;padding:13px 14px;font-size:16px;color:var(--text);outline:none}
+input:focus{border-color:#8daaff;box-shadow:0 0 0 3px #4778f51c}
+input[type=range]{width:100%;accent-color:var(--blue);margin:8px 0}
+.range-labels{display:flex;justify-content:space-between;color:var(--muted);font-size:12px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stat{background:#f7f8fc;border:1px solid var(--line);border-radius:16px;padding:14px}
+.stat .k{color:var(--muted);font-size:12px}
+.stat .v{font-size:22px;font-weight:800;margin-top:7px;overflow-wrap:anywhere}
+.stat .v.green{color:var(--green)}
+.note{font-size:12px;line-height:1.7;color:var(--muted);margin-top:13px}
+button{border:0;border-radius:14px;background:var(--blue);color:white;padding:13px 16px;font-size:14px;font-weight:700;cursor:pointer}
+button.secondary{background:#edf1ff;color:#315ed4}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}
+.actions button{flex:1}
+h2{font-size:17px;margin:0 0 6px}
+.tips{display:grid;gap:12px;margin-top:16px}
+.tip{display:flex;gap:12px;align-items:flex-start}
+.icon{width:35px;height:35px;display:grid;place-items:center;background:#edf1ff;border-radius:12px;flex:none}
+.tip strong{font-size:14px}.tip p{font-size:13px;line-height:1.6;color:var(--muted);margin:4px 0 0}
+footer{text-align:center;color:var(--muted);font-size:11px;padding:8px}
+@media(max-width:390px){h1{font-size:27px}.card{padding:17px}.amount{font-size:38px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div id="introScreen" class="intro-screen">
+  <div class="intro-glow"></div>
+  <div class="intro-content">
+    <div class="intro-mark">T</div>
+    <div class="intro-kicker">PERSONAL SAVING PLAN</div>
+    <h1 class="intro-title">天天制作</h1>
+    <p class="intro-subtitle">把每一个小目标，存成未来的惊喜。</p>
+    <button id="enterBtn" class="enter-btn">进入页面 <span aria-hidden="true">↗</span></button>
+    <div class="intro-foot">MADE WITH CARE · 天天制作</div>
+  </div>
+</div>
+<main>
+<header>
+<div class="eyebrow">SAVING PLAN · 01</div>
+<h1>3000 元存钱计划</h1>
+<div class="sub">把目标拆成每天可完成的小步骤。输入你的实际情况，自动计算还差多少、预计多久达成。</div>
+</header>
+
+<section class="card target">
+<div class="small">我的存款目标</div>
+<div class="amount" id="goalDisplay">¥3,000</div>
+<div class="progress-head"><span>存款进度</span><strong id="progressText">0%</strong></div>
+<div class="track"><div class="fill" id="progressFill"></div></div>
+</section>
+
+<section class="card">
+<h2>设置你的计划</h2>
+<div class="field">
+<label for="goalInput">目标金额（元）</label>
+<input id="goalInput" type="number" min="1" step="1" value="3000" inputmode="decimal">
+</div>
+<div class="field">
+<label for="saved">目前已存金额 <span>人民币 ¥</span></label>
+<input id="saved" type="number" min="0" max="3000" step="10" value="0" inputmode="decimal">
+</div>
+<div class="field">
+<label for="dailyCustom">每天计划存入（可直接输入）</label>
+<input id="dailyCustom" type="number" min="0" step="1" value="20" inputmode="decimal">
+<input id="daily" aria-label="每天计划存入滑块" type="range" min="0" max="200" step="1" value="20">
+<div class="range-labels"><span>¥0/天</span><span>¥100/天</span><span>¥200/天</span></div>
+</div>
+<div class="field">
+<label for="weeklyCustom">每周额外存入（可直接输入）</label>
+<input id="weeklyCustom" type="number" min="0" step="1" value="0" inputmode="decimal">
+<input id="weekly" aria-label="每周额外存入滑块" type="range" min="0" max="1400" step="10" value="0">
+<div class="range-labels"><span>¥0/周</span><span>¥700/周</span><span>¥1,400/周</span></div>
+</div>
+<div class="field">
+<label for="startDate">计划开始日期</label>
+<input id="startDate" type="date">
+</div>
+<div class="grid">
+<div class="stat"><div class="k">距离目标还差</div><div class="v" id="remaining">¥3,000</div></div>
+<div class="stat"><div class="k">预计达成时间</div><div class="v green" id="days">150 天</div></div>
+<div class="stat"><div class="k">折算每天存入</div><div class="v" id="perDay">¥20</div></div>
+<div class="stat"><div class="k">预计完成日期</div><div class="v" id="finishDate">—</div></div>
+</div>
+<div class="note" id="hint">估算按每天持续存入计算，不包含利息；实际进度取决于收入与支出。</div>
+<div class="actions">
+<button id="saveBtn">保存本机计划</button>
+<button class="secondary" id="resetBtn">重置</button>
+</div>
+</section>
+
+<section class="card">
+<h2>让存钱速度更快</h2>
+<div class="tips">
+<div class="tip"><div class="icon">💰</div><div><strong>收入到账先存一笔</strong><p>先把目标金额转入单独的储蓄账户，再安排日常消费。</p></div></div>
+<div class="tip"><div class="icon">🧾</div><div><strong>给非必要消费设上限</strong><p>减少冲动购物、外卖和不必要的游戏充值，但别削减基本生活开支。</p></div></div>
+<div class="tip"><div class="icon">✨</div><div><strong>增加安全的额外收入</strong><p>有条件时做合法兼职或出售闲置物品；避免高息借贷和“稳赚”骗局。</p></div></div>
+</div>
+</section>
+<footer>你的数据仅保存在当前设备的浏览器中（点击“保存本机计划”后）。</footer>
+</main>
+<script>
+const $ = id => document.getElementById(id);
+$('enterBtn').addEventListener('click',()=>{
+  $('introScreen').classList.add('hide');
+  setTimeout(()=>{$('introScreen').style.display='none';},600);
+});
+const today = new Date();
+const todayString = () => `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')}`;
+$('startDate').value = todayString();
+function money(n){return '¥'+Math.round(n).toLocaleString('zh-CN');}
+function positive(id, fallback=0){return Math.max(0, Number($(id).value)||fallback);}
+function calc(){
+  const goal = Math.max(1, Number($('goalInput').value)||3000);
+  const saved = positive('saved');
+  const daily = positive('dailyCustom');
+  const weekly = positive('weeklyCustom');
+  const remain = Math.max(0, goal-saved);
+  const perDay = daily+weekly/7;
+  const days = remain===0 ? 0 : (perDay>0 ? Math.ceil(remain/perDay) : null);
+  $('goalDisplay').textContent=money(goal);
+  $('dailyLabel').textContent=money(daily);
+  $('weeklyLabel').textContent=money(weekly);
+  $('remaining').textContent=money(remain);
+  $('perDay').textContent=money(perDay);
+  $('days').textContent=remain===0?'已达成':days===null?'请设置存款':`${days} 天`;
+  $('progressText').textContent=`${Math.min(100, saved/goal*100).toFixed(1).replace('.0','')}%`;
+  $('progressFill').style.width=`${Math.min(100,saved/goal*100)}%`;
+  if(days!==null){
+    const start = $('startDate').value ? new Date($('startDate').value+'T12:00:00') : new Date();
+    start.setDate(start.getDate()+days);
+    $('finishDate').textContent=remain===0?'已达成':`${start.getMonth()+1}月${start.getDate()}日`;
+  } else {$('finishDate').textContent='—';}
+  $('hint').textContent = remain===0 ? '恭喜！你已达到存款目标。' : perDay===0 ? '每天存入金额为 0，请调整计划后查看预计时间。' : `按每天约 ${money(perDay)} 的速度估算；不包含利息，也不会自动扣款。`;
+}
+function syncRangeFromCustom(customId, rangeId, max){
+  const n = Math.max(0, Number($(customId).value)||0);
+  $(rangeId).value = Math.min(max,n);
+}
+$('dailyCustom').addEventListener('input',()=>{syncRangeFromCustom('dailyCustom','daily',200);calc();});
+$('daily').addEventListener('input',()=>{$('dailyCustom').value=$('daily').value;calc();});
+$('weeklyCustom').addEventListener('input',()=>{syncRangeFromCustom('weeklyCustom','weekly',1400);calc();});
+$('weekly').addEventListener('input',()=>{$('weeklyCustom').value=$('weekly').value;calc();});
+['goalInput','saved','startDate'].forEach(id=>$(id).addEventListener('input',calc));
+$('saveBtn').addEventListener('click',()=>{
+  try{
+    localStorage.setItem('savingPlan3000',JSON.stringify({
+      goal:$('goalInput').value,saved:$('saved').value,
+      daily:$('dailyCustom').value,weekly:$('weeklyCustom').value,
+      startDate:$('startDate').value
+    }));
+    $('saveBtn').textContent='已保存 ✓';
+    setTimeout(()=> $('saveBtn').textContent='保存本机计划',1600);
+  }catch(e){alert('当前浏览器不支持本机保存，请截图保留计划。');}
+});
+$('resetBtn').addEventListener('click',()=>{
+  $('goalInput').value=3000;$('saved').value=0;
+  $('dailyCustom').value=20;$('daily').value=20;
+  $('weeklyCustom').value=0;$('weekly').value=0;
+  $('startDate').value=todayString();
+  calc();
+});
+try{
+  const p=JSON.parse(localStorage.getItem('savingPlan3000')||'null');
+  if(p){
+    if(p.goal!==undefined)$('goalInput').value=p.goal;
+    if(p.saved!==undefined)$('saved').value=p.saved;
+    if(p.daily!==undefined){$('dailyCustom').value=p.daily;$('daily').value=Math.min(200,Number(p.daily)||0);}
+    if(p.weekly!==undefined){$('weeklyCustom').value=p.weekly;$('weekly').value=Math.min(1400,Number(p.weekly)||0);}
+    if(p.startDate)$('startDate').value=p.startDate;
+  }
+}catch(e){}
+calc();
+</script>
+</body>
+</html>
